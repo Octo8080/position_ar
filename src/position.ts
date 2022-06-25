@@ -37,10 +37,10 @@ function onError(error: GeolocationPositionError) {
 //};
 
 const target = {
-    latitude: 35.60662567706206,
-    longitude: 139.70469609770905,
-    altitude: 45,
-  };
+  latitude: 35.60662567706206,
+  longitude: 139.70469609770905,
+  altitude: 45,
+};
 
 export function setTarget(params: {
   latitude: number;

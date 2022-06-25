@@ -11,7 +11,7 @@ let viewCanvasContext: HTMLCanvasElement | null = null;
 //let getDirection: Function | undefined = getDistanceTo;
 
 export function canvasInit() {
-  console.log("canvasInit")
+  console.log("canvasInit");
   // streamを入力するvideoを作成する
   videoSource = document.createElement("video");
 
@@ -51,15 +51,14 @@ export async function videoSourceInit() {
   videoSource.play();
 }
 
-export function canvasUpdate()
-{
+export function canvasUpdate() {
   // 表示用のCanvas に カメラの映像を書き込み
   viewCanvasContext.drawImage(videoSource, 0, 0);
   // 表示用のCanvas に Three.js で作成したCanvasを書き込み
   viewCanvasContext.drawImage(offscreenCanvas, 0, 0);
 
   window.requestAnimationFrame(canvasUpdate);
-};
+}
 
 // Three.js 関連の処理を集約
 export function threeJsInit() {
@@ -100,53 +99,54 @@ export function threeJsInit() {
 
   // アニメーション
   renderer.setAnimationLoop((time) => {
-//    mesh.rotation.x = time / 1000;
-//    mesh.rotation.y = time / 1000;
-//
-//    renderer.render(scene, camera);
+    //    mesh.rotation.x = time / 1000;
+    //    mesh.rotation.y = time / 1000;
+    //
+    //    renderer.render(scene, camera);
 
     mesh.rotation.x = time / 2000;
     mesh.rotation.y = time / 1000;
 
-    const direction = getDirection()
-    const distanceTo = getDistanceTo()
+    const direction = getDirection();
+    const distanceTo = getDistanceTo();
     //console.log(direction)
     //console.log(distanceTo)
-    
+
     //console.log(direction.horizontal)
-    const diff = convert(distanceTo.direction.x, direction.horizontal)
+    const diff = convert(distanceTo.direction.x, direction.horizontal);
 
     // yは上方向
     // zは手前方向
     // xは右方向
     mesh.position.z = -distanceTo.distance * Math.cos(diff / 180 * Math.PI);
     mesh.position.x = -distanceTo.distance * Math.sin(diff / 180 * Math.PI);
-    mesh.position.y = distanceTo.distance * Math.cos((distanceTo.direction.y - direction.vertical) / 180 * Math.PI);
+    mesh.position.y = distanceTo.distance *
+      Math.cos((distanceTo.direction.y - direction.vertical) / 180 * Math.PI);
 
-    document.getElementById("app1").innerText = distanceTo.direction.x
-    document.getElementById("app2").innerText = direction.horizontal
-    document.getElementById("app3").innerText = convert(distanceTo.direction.x, direction.horizontal)
-    document.getElementById("app4").innerText = mesh.position.x
-    document.getElementById("app5").innerText = mesh.position.z
-    document.getElementById("app6").innerText = mesh.position.y
+    document.getElementById("app1").innerText = distanceTo.direction.x;
+    document.getElementById("app2").innerText = direction.horizontal;
+    document.getElementById("app3").innerText = convert(
+      distanceTo.direction.x,
+      direction.horizontal,
+    );
+    document.getElementById("app4").innerText = mesh.position.x;
+    document.getElementById("app5").innerText = mesh.position.z;
+    document.getElementById("app6").innerText = mesh.position.y;
 
     //mesh.position.x = 0
     //mesh.position.z = -3
     renderer.render(scene, camera);
-
   });
 }
 
-
-
 function convert(arg: number, target: number) {
-    let diff = arg - target;
-  
-    if (diff > 180) {
-      diff -= 360;
-    }
-    if (diff < -180) {
-      diff += 360;
-    }
-    return diff;
+  let diff = arg - target;
+
+  if (diff > 180) {
+    diff -= 360;
   }
+  if (diff < -180) {
+    diff += 360;
+  }
+  return diff;
+}
