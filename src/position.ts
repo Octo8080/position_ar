@@ -76,7 +76,7 @@ function getDistanceAndDirection(params: {
   direction.x = convert(selfPosition.finalBearingTo(targetPosition));
 
   // 2座標間垂直方向角度
-  const altitudeDiff = target.altitude - params.altitude;
+  const altitudeDiff = lawTargetPosition.altitude - params.altitude;
   direction.y = (Math.atan2(distance, -altitudeDiff) * 180) / Math.PI - 90;
 
   return { distance, direction };
