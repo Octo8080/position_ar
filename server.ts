@@ -1,6 +1,33 @@
-import { Application } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+
+const bearerToken = Deno.env.get("SUPABASE_BEARER_TOKEN") as string
+const apiEndPoint = Deno.env.get("SUPABASE_API_ENDPOINT") as string
 
 const app = new Application();
+const router = new Router();
+
+// GET /api/position は、supabeseから届いた結果を詰めなおして送る
+router.get("/api/position", async (ctx) => {
+  const result = await fetch(
+    apiEndPoint,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          `Bearer ${bearerToken}`,
+      },
+    }
+  );
+  const resultJson = await result.json();
+
+  ctx.response.body = resultJson;
+  ctx.response.status = 200;
+  ctx.response.type = "application/json";
+});
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.use(async (context, next) => {
   try {

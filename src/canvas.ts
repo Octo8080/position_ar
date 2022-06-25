@@ -119,9 +119,9 @@ export function threeJsInit(renderTarget: HTMLCanvasElement) {
     // yは上方向
     // zは手前方向
     // xは右方向
-    mesh.position.z = -distanceTo.distance * Math.cos(diff / 180 * Math.PI)/5000;
-    mesh.position.x = -distanceTo.distance * Math.sin(diff / 180 * Math.PI)/5000;
-    mesh.position.y = distanceTo.distance * Math.cos((distanceTo.direction.y - direction.vertical) / 180 * Math.PI)/5000;
+    mesh.position.z = -distanceTo.distance * Math.cos(diff / 180 * Math.PI);
+    mesh.position.x = -distanceTo.distance * Math.sin(diff / 180 * Math.PI);
+    mesh.position.y = distanceTo.distance * Math.cos((distanceTo.direction.y - direction.vertical) / 180 * Math.PI);
 
     document.getElementById("app1").innerText = distanceTo.direction.x
     document.getElementById("app2").innerText = direction.horizontal
