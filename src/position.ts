@@ -44,7 +44,7 @@ function initialTarget() {
   };
 }
 
-const target = initialTarget();
+let target = initialTarget();
 
 export function setTarget(params: {
   latitude: number;
