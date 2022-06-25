@@ -140,7 +140,7 @@ export function threeJsInit() {
 }
 
 function convert(arg: number, target: number) {
-  let diff = arg - target;
+  let diff = arg + target;
 
   if (diff > 180) {
     diff -= 360;
