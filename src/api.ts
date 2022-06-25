@@ -16,14 +16,14 @@ export function isPosition(lawArg: unknown): lawArg is Position {
 
   const arg = lawArg as { [key: string]: unknown };
 
-  if ("latitude" in arg) return false;
-  if (typeof arg.latitude === "number") return false;
+  if (!("latitude" in arg)) return false;
+  if (typeof arg.latitude !== "number") return false;
 
-  if ("longitude" in arg) return false;
-  if (typeof arg.longitude === "number") return false;
+  if (!("longitude" in arg)) return false;
+  if (typeof arg.longitude !== "number") return false;
 
-  if ("altitude" in arg) return false;
-  if (typeof arg.altitude === "number") return false;
+  if (!("altitude" in arg)) return false;
+  if (typeof arg.altitude !== "number") return false;
 
   return true;
 }
