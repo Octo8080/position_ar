@@ -18489,7 +18489,7 @@
       mesh.position.x = -distanceTo2.distance * Math.sin(diff / 180 * Math.PI);
       mesh.position.y = distanceTo2.distance * Math.cos((distanceTo2.direction.y - direction2.vertical) / 180 * Math.PI);
       renderer.render(scene, camera);
-      if (Math.abs(diff) > 3) {
+      if (Math.abs(diff) > 10) {
         resetEffectAnimation();
         return;
       }
@@ -18498,7 +18498,7 @@
   }
   function doEffectAnimation() {
     effectOffscreenCanvasContext.fillStyle = "rgba(255, 0, 0)";
-    effectOffscreenCanvasContext.fillRect(0, 0, effectOffscreenCanvas.width, effectOffscreenCanvas.height);
+    effectOffscreenCanvasContext.fillRect(10, 10, effectOffscreenCanvas.width - 20, effectOffscreenCanvas.height - 20);
     effectOffscreenCanvasContext.clearRect(50, 50, effectOffscreenCanvas.width - 100, effectOffscreenCanvas.height - 100);
     effectOffscreenCanvasContext.clearRect(150, 0, effectOffscreenCanvas.width - 300, effectOffscreenCanvas.height);
     effectOffscreenCanvasContext.clearRect(0, 150, effectOffscreenCanvas.width, effectOffscreenCanvas.height - 300);
