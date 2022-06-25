@@ -18394,9 +18394,9 @@
     console.error(error);
   }
   var target = {
-    latitude: 35.40564021220976,
-    longitude: 140.0539013101807,
-    altitude: 45
+    latitude: 0,
+    longitude: 0,
+    altitude: 0
   };
   function setTarget(params) {
     target.latitude = params.latitude;
@@ -18474,9 +18474,9 @@
       const direction2 = getDirection();
       const distanceTo2 = getDistanceTo();
       const diff = convert2(distanceTo2.direction.x, direction2.horizontal);
-      mesh.position.z = -distanceTo2.distance * Math.cos(diff / 180 * Math.PI) / 5e3;
-      mesh.position.x = -distanceTo2.distance * Math.sin(diff / 180 * Math.PI) / 5e3;
-      mesh.position.y = distanceTo2.distance * Math.cos((distanceTo2.direction.y - direction2.vertical) / 180 * Math.PI) / 5e3;
+      mesh.position.z = -distanceTo2.distance * Math.cos(diff / 180 * Math.PI);
+      mesh.position.x = -distanceTo2.distance * Math.sin(diff / 180 * Math.PI);
+      mesh.position.y = distanceTo2.distance * Math.cos((distanceTo2.direction.y - direction2.vertical) / 180 * Math.PI);
       document.getElementById("app1").innerText = distanceTo2.direction.x;
       document.getElementById("app2").innerText = direction2.horizontal;
       document.getElementById("app3").innerText = convert2(distanceTo2.direction.x, direction2.horizontal);
