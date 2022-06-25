@@ -88,7 +88,7 @@ export function threeJsInit() {
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
-    canvas: viewCanvasContext,
+    canvas: offscreenCanvas,
   });
   renderer.setSize(
     document.documentElement.clientWidth,

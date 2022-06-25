@@ -16,9 +16,9 @@ window.onload = async () => {
     setTarget(target);
   } catch (e) {}
 
-  [videoSource, offscreenCanvas, viewCanvasContext] = canvasInit();
-  threeJsInit(offscreenCanvas);
-  await videoSourceInit(videoSource);
+  canvasInit();
+  threeJsInit();
+  await videoSourceInit();
   canvasUpdate();
 };
 
