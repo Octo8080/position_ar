@@ -101,7 +101,7 @@ export function threeJsInit() {
       Math.cos(((distanceTo.direction.y - direction.vertical) / 180) * Math.PI);
     renderer.render(scene, camera);
 
-    if (Math.abs(diff) > 3) {
+    if (Math.abs(diff) > 10) {
       resetEffectAnimation();
       return 
     }
