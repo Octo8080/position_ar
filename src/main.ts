@@ -11,10 +11,10 @@ window.onload = async () => {
   if (!navigator.geolocation) return;
   setInterval(positionHundler, 1000);
 
-//  try {
-//    const target = await initialTarget()
-//    setTarget(target);
-//  } catch (e) {}
+  try {
+    const target = await initialTarget()
+    setTarget(target);
+  } catch (e) {}
 
   [videoSource, offscreenCanvas, viewCanvasContext] = canvasInit();
   threeJsInit(offscreenCanvas);
