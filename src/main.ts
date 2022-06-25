@@ -16,7 +16,7 @@ window.onload = async () => {
       const result = await fetch("/api/position");
       const resultJson = result.json();
       if (!isPosition(resultJson)) throw new Error("Result is not Position");
-    setTarget(resultJson);
+    //setTarget(resultJson);
   } catch (e) {
     console.error(e)
   }
