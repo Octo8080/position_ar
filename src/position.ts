@@ -29,19 +29,11 @@ function onError(error: GeolocationPositionError) {
   console.error(error);
 }
 
-// こちらの座標は東京ドイツ村周辺
-//const target = {
-//  latitude: 0,
-//  longitude: 0,
-//  altitude: 0,
-//};
-
 function initialTarget() {
-    console.log("initialTarget")
   return {
-    latitude: 35.60662567706206,
-    longitude: 139.70469609770905,
-    altitude: 45,
+    latitude: 0,
+    longitude: 0,
+    altitude: 0,
   };
 }
 
@@ -52,7 +44,7 @@ export function setTarget(params: {
   longitude: number;
   altitude: number;
 }) {
-    lawTargetPosition = params
+  lawTargetPosition = params;
 }
 
 function getDistanceAndDirection(params: {
@@ -60,29 +52,22 @@ function getDistanceAndDirection(params: {
   longitude: number;
   altitude: number;
 }): DistanceTo {
-  console.log(lawTargetPosition)
-  const q = lawTargetPosition
+  console.log(lawTargetPosition);
+  const q = lawTargetPosition;
   const selfPosition = new LatLon(params.latitude, params.longitude);
-  console.log(q)
-  console.log(q.latitude)
-  console.log(q.longitude)
   const targetPosition = new LatLon(q.latitude, q.longitude);
 
-  // 2座標間距離
   const distance = selfPosition.distanceTo(targetPosition);
 
-  // 2座標間平面方向角度
   const direction = { x: 0, y: 0 };
   direction.x = convert(selfPosition.finalBearingTo(targetPosition));
 
-  // 2座標間垂直方向角度
   const altitudeDiff = lawTargetPosition.altitude - params.altitude;
   direction.y = (Math.atan2(distance, -altitudeDiff) * 180) / Math.PI - 90;
 
   return { distance, direction };
 }
 
-// 北を0とした0~360度系を南を0とした0~360度系に変換
 function convert(arg: number) {
   return (360 - arg + 180) % 360;
 }

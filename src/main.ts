@@ -6,18 +6,14 @@ import {
 } from "./canvas.ts";
 import { orientationHandler } from "./device_orientation.ts";
 import { positionHundler, setTarget } from "./position.ts";
-import { isPosition } from "./api.ts";
+import { initialTargetFetch } from "./api.ts";
 window.onload = async () => {
   if (!navigator.geolocation) return;
   setInterval(positionHundler, 1000);
 
   try {
-    //const target = await initialTargetFetch();
-    const result = await fetch("/api/position");
-    const resultJson = await result.json();
-    if (!isPosition(resultJson.position)) throw new Error("Result is not Position");
-
-    setTarget(resultJson.position);
+    const target = await initialTargetFetch();
+    setTarget(target);
   } catch (e) {
     console.error(e);
   }

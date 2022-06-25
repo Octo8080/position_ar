@@ -4,7 +4,7 @@ export interface Direction {
 }
 
 function initialDirection() {
-  console.log("initialDirection")
+  console.log("initialDirection");
   return { horizontal: 0, vertical: 0 };
 }
 
