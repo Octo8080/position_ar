@@ -63,6 +63,8 @@ function getDistanceAndDirection(params: {
   console.log(lawTargetPosition)
   const q = lawTargetPosition
   const selfPosition = new LatLon(params.latitude, params.longitude);
+  console.log(q.latitude)
+  console.log(q.longitude)
   const targetPosition = new LatLon(q.latitude, q.longitude);
 
   // 2座標間距離
