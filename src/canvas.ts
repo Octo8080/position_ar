@@ -5,26 +5,30 @@ import { getDistanceTo } from "./position.ts";
 
 let videoSource: HTMLVideoElement | null = null;
 let offscreenCanvas: HTMLCanvasElement | null = null;
-let viewCanvasContext: HTMLCanvasElement | null = null;
+let effectOffscreenCanvas: HTMLCanvasElement | null = null;
+let effectOffscreenCanvasContext: RenderingContext| null = null
+let viewCanvasContext: RenderingContext | null = null;
 export function canvasInit() {
   console.log("canvasInit");
   videoSource = document.createElement("video");
 
-  offscreenCanvas = <HTMLCanvasElement> (
-    document.createElement("canvas")
-  );
+  offscreenCanvas = <HTMLCanvasElement>document.createElement("canvas");
+  effectOffscreenCanvas = <HTMLCanvasElement>document.createElement("canvas");
 
-  const viewCanvas: HTMLCanvasElement = <HTMLCanvasElement> (
+  const viewCanvas: HTMLCanvasElement = <HTMLCanvasElement>(
     document.querySelector("#result")
   );
   viewCanvas.height = document.documentElement.clientHeight;
   viewCanvas.width = document.documentElement.clientWidth;
 
   viewCanvasContext = viewCanvas.getContext("2d");
+  effectOffscreenCanvasContext =  effectOffscreenCanvas.getContext("2d");
 
   offscreenCanvas.width = viewCanvas.width;
+  effectOffscreenCanvas.width = viewCanvas.width;
   videoSource.videoWidth = viewCanvas.width;
   offscreenCanvas.height = viewCanvas.height;
+  effectOffscreenCanvas.height = viewCanvas.height;
   videoSource.videoHeight = viewCanvas.height;
   return [videoSource, offscreenCanvas, viewCanvasContext];
 }
@@ -44,6 +48,7 @@ export async function videoSourceInit() {
 export function canvasUpdate() {
   viewCanvasContext.drawImage(videoSource, 0, 0);
   viewCanvasContext.drawImage(offscreenCanvas, 0, 0);
+  viewCanvasContext.drawImage(effectOffscreenCanvas, 0, 0);
   window.requestAnimationFrame(canvasUpdate);
 }
 
@@ -54,7 +59,7 @@ export function threeJsInit() {
     document.documentElement.clientWidth /
       document.documentElement.clientHeight,
     0.01,
-    1000,
+    1000
   );
 
   camera.position.z = 0;
@@ -76,7 +81,7 @@ export function threeJsInit() {
   });
   renderer.setSize(
     document.documentElement.clientWidth,
-    document.documentElement.clientHeight,
+    document.documentElement.clientHeight
   );
 
   renderer.setClearColor(new THREE.Color("black"), 0);
@@ -89,16 +94,31 @@ export function threeJsInit() {
     const distanceTo = getDistanceTo();
     const diff = convert(distanceTo.direction.x, direction.horizontal);
 
-    mesh.position.z = -distanceTo.distance * Math.cos(diff / 180 * Math.PI);
-    mesh.position.x = -distanceTo.distance * Math.sin(diff / 180 * Math.PI);
-    mesh.position.y = distanceTo.distance *
-      Math.cos((distanceTo.direction.y - direction.vertical) / 180 * Math.PI);
+    mesh.position.z = -distanceTo.distance * Math.cos((diff / 180) * Math.PI);
+    mesh.position.x = -distanceTo.distance * Math.sin((diff / 180) * Math.PI);
+    mesh.position.y =
+      distanceTo.distance *
+      Math.cos(((distanceTo.direction.y - direction.vertical) / 180) * Math.PI);
     renderer.render(scene, camera);
 
-    const ctx = offscreenCanvas.getContext("2d");
-    ctx.fillStyle = "green";
-    ctx.fillRect(10, 10, 150, 100);
+    if (Math.abs(diff) > 3) {
+      resetEffectAnimation();
+      return 
+    }
+    doEffectAnimation();
   });
+}
+
+function doEffectAnimation() {
+  effectOffscreenCanvasContext.fillStyle ="rgba(255, 0, 0)";
+  effectOffscreenCanvasContext.fillRect(0, 0,effectOffscreenCanvas.width, effectOffscreenCanvas.height);
+  effectOffscreenCanvasContext.clearRect(50, 50,effectOffscreenCanvas.width-100, effectOffscreenCanvas.height-100)
+  effectOffscreenCanvasContext.clearRect(150, 0,effectOffscreenCanvas.width-300, effectOffscreenCanvas.height)
+  effectOffscreenCanvasContext.clearRect(0, 150,effectOffscreenCanvas.width, effectOffscreenCanvas.height-300)
+}
+
+function resetEffectAnimation() {
+    effectOffscreenCanvasContext.clearRect(0, 0,effectOffscreenCanvas.width, effectOffscreenCanvas.height)
 }
 
 function convert(arg: number, target: number) {
