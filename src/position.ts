@@ -30,11 +30,17 @@ function onError(error: GeolocationPositionError) {
 }
 
 // こちらの座標は東京ドイツ村周辺
+//const target = {
+//  latitude: 0,
+//  longitude: 0,
+//  altitude: 0,
+//};
+
 const target = {
-  latitude: 0,
-  longitude: 0,
-  altitude: 0,
-};
+    latitude: 35.60662567706206,
+    longitude: 139.70469609770905,
+    altitude: 45,
+  };
 
 export function setTarget(params: {
   latitude: number;

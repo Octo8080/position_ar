@@ -3,6 +3,9 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 const bearerToken = Deno.env.get("SUPABASE_BEARER_TOKEN") as string
 const apiEndPoint = Deno.env.get("SUPABASE_API_ENDPOINT") as string
 
+console.log(bearerToken)
+console.log(apiEndPoint)
+
 const app = new Application();
 const router = new Router();
 

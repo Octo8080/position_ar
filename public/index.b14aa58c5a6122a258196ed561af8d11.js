@@ -18394,15 +18394,10 @@
     console.error(error);
   }
   var target = {
-    latitude: 0,
-    longitude: 0,
-    altitude: 0
+    latitude: 35.60662567706206,
+    longitude: 139.70469609770905,
+    altitude: 45
   };
-  function setTarget(params) {
-    target.latitude = params.latitude;
-    target.longitude = params.longitude;
-    target.altitude = params.altitude;
-  }
   function getDistanceAndDirection(params) {
     const selfPosition = new c(params.latitude, params.longitude);
     const targetPosition = new c(target.latitude, target.longitude);
@@ -18502,42 +18497,12 @@
     if (!navigator.geolocation)
       return;
     setInterval(positionHundler, 1e3);
-    try {
-      const target2 = await initialTarget();
-      setTarget(target2);
-    } catch (e) {
-    }
     [videoSource, offscreenCanvas, viewCanvasContext] = canvasInit();
     threeJsInit(offscreenCanvas);
     await videoSourceInit(videoSource);
     canvasUpdate();
   };
   window.addEventListener("deviceorientationabsolute", orientationHandler, true);
-  async function initialTarget() {
-    const result = await fetch("/api/position");
-    const resultJson = result.json();
-    if (!isPosition(resultJson))
-      throw new Error("Result is not Position");
-    return resultJson;
-  }
-  function isPosition(lawArg) {
-    if (!lawArg)
-      return false;
-    const arg = lawArg;
-    if ("latitude" in arg)
-      return false;
-    if (typeof arg.latitude === "number")
-      return false;
-    if ("longitude" in arg)
-      return false;
-    if (typeof arg.longitude === "number")
-      return false;
-    if ("altitude" in arg)
-      return false;
-    if (typeof arg.altitude === "number")
-      return false;
-    return true;
-  }
 })();
 /**
  * @license
