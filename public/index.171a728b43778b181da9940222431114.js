@@ -18398,6 +18398,11 @@
     longitude: 139.70469609770905,
     altitude: 45
   };
+  function setTarget(params) {
+    target.latitude = params.latitude;
+    target.longitude = params.longitude;
+    target.altitude = params.altitude;
+  }
   function getDistanceAndDirection(params) {
     const selfPosition = new c(params.latitude, params.longitude);
     const targetPosition = new c(target.latitude, target.longitude);
@@ -18430,7 +18435,7 @@
     videoSource2.videoHeight = viewCanvas.height;
     return [videoSource2, offscreenCanvas2, viewCanvasContext2];
   }
-  async function videoSourceInit(exportCanvasElement) {
+  async function videoSourceInit() {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: { exact: "environment" },
@@ -18438,15 +18443,15 @@
         height: 1080
       }
     });
-    exportCanvasElement.srcObject = stream;
-    exportCanvasElement.play();
+    videoSource2.srcObject = stream;
+    videoSource2.play();
   }
   function canvasUpdate() {
     viewCanvasContext2.drawImage(videoSource2, 0, 0);
     viewCanvasContext2.drawImage(offscreenCanvas2, 0, 0);
     window.requestAnimationFrame(canvasUpdate);
   }
-  function threeJsInit(renderTarget) {
+  function threeJsInit() {
     const camera = new PerspectiveCamera(52, document.documentElement.clientWidth / document.documentElement.clientHeight, 0.01, 1e3);
     camera.position.z = 0;
     camera.lookAt(new Vector3(0, 0, -1));
@@ -18459,7 +18464,7 @@
     const renderer = new WebGLRenderer({
       antialias: true,
       alpha: true,
-      canvas: renderTarget
+      canvas: viewCanvasContext2
     });
     renderer.setSize(document.documentElement.clientWidth, document.documentElement.clientHeight);
     renderer.setClearColor(new Color("black"), 0);
@@ -18492,11 +18497,43 @@
     return diff;
   }
 
+  // deno:file:///usr/src/app/src/api.ts
+  async function initialTargetFetch() {
+    const result = await fetch("/api/position");
+    const resultJson = result.json();
+    if (!isPosition(resultJson))
+      throw new Error("Result is not Position");
+    return resultJson;
+  }
+  function isPosition(lawArg) {
+    if (!lawArg)
+      return false;
+    const arg = lawArg;
+    if ("latitude" in arg)
+      return false;
+    if (typeof arg.latitude === "number")
+      return false;
+    if ("longitude" in arg)
+      return false;
+    if (typeof arg.longitude === "number")
+      return false;
+    if ("altitude" in arg)
+      return false;
+    if (typeof arg.altitude === "number")
+      return false;
+    return true;
+  }
+
   // deno:file:///usr/src/app/src/main.ts
   window.onload = async () => {
     if (!navigator.geolocation)
       return;
     setInterval(positionHundler, 1e3);
+    try {
+      const target2 = await initialTargetFetch();
+      setTarget(target2);
+    } catch (e) {
+    }
     [videoSource, offscreenCanvas, viewCanvasContext] = canvasInit();
     threeJsInit(offscreenCanvas);
     await videoSourceInit(videoSource);

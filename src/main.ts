@@ -6,13 +6,13 @@ import {
 } from "./canvas.ts";
 import { orientationHandler } from "./device_orientation.ts";
 import { positionHundler, setTarget } from "./position.ts";
-import {initialTarget} from "./api.ts"
+import {initialTargetFetch} from "./api.ts"
 window.onload = async () => {
   if (!navigator.geolocation) return;
   setInterval(positionHundler, 1000);
 
   try {
-    const target = await initialTarget()
+    const target = await initialTargetFetch()
     setTarget(target);
   } catch (e) {}
 

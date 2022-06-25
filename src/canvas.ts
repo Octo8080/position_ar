@@ -37,7 +37,7 @@ export function canvasInit() {
   return [videoSource, offscreenCanvas, viewCanvasContext];
 }
 
-export async function videoSourceInit(exportCanvasElement: HTMLCanvasElement) {
+export async function videoSourceInit() {
   //カメラを取得/設定
   const stream = await navigator.mediaDevices.getUserMedia({
     video: {
@@ -47,8 +47,8 @@ export async function videoSourceInit(exportCanvasElement: HTMLCanvasElement) {
     },
   });
   //オブジェクトと関連付ける
-  exportCanvasElement.srcObject = stream;
-  exportCanvasElement.play();
+  videoSource.srcObject = stream;
+  videoSource.play();
 }
 
 export function canvasUpdate()
@@ -62,7 +62,7 @@ export function canvasUpdate()
 };
 
 // Three.js 関連の処理を集約
-export function threeJsInit(renderTarget: HTMLCanvasElement) {
+export function threeJsInit() {
   // カメラの視野角 52 は、Google pixel 4 Plus に合わせた
   const camera = new THREE.PerspectiveCamera(
     52,
@@ -88,7 +88,7 @@ export function threeJsInit(renderTarget: HTMLCanvasElement) {
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
-    canvas: renderTarget,
+    canvas: viewCanvasContext,
   });
   renderer.setSize(
     document.documentElement.clientWidth,
