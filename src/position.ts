@@ -45,14 +45,14 @@ function initialTarget() {
   };
 }
 
-let target = initialTarget();
+let targetPosition = initialTarget();
 
 export function setTarget(params: {
   latitude: number;
   longitude: number;
   altitude: number;
 }) {
-  target = params
+  targetPosition = params
 }
 
 function getDistanceAndDirection(params: {
@@ -60,9 +60,9 @@ function getDistanceAndDirection(params: {
   longitude: number;
   altitude: number;
 }): DistanceTo {
-  console.log(target)
+  console.log(targetPosition)
   const selfPosition = new LatLon(params.latitude, params.longitude);
-  const targetPosition = new LatLon(target.latitude, target.longitude);
+  const targetPosition = new LatLon(targetPosition.latitude, targetPosition.longitude);
 
   // 2座標間距離
   const distance = selfPosition.distanceTo(targetPosition);
@@ -72,7 +72,7 @@ function getDistanceAndDirection(params: {
   direction.x = convert(selfPosition.finalBearingTo(targetPosition));
 
   // 2座標間垂直方向角度
-  const altitudeDiff = target.altitude - params.altitude;
+  const altitudeDiff = targetPosition.altitude - params.altitude;
   direction.y = (Math.atan2(distance, -altitudeDiff) * 180) / Math.PI - 90;
 
   return { distance, direction };

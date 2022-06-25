@@ -13,12 +13,13 @@ window.onload = async () => {
 
   try {
     //const target = await initialTargetFetch();
-      const result = await fetch("/api/position");
-      const resultJson = await result.json();
-      if (!isPosition(resultJson)) throw new Error("Result is not Position");
+    const result = await fetch("/api/position");
+    const resultJson = await result.json();
+    if (!isPosition(resultJson)) throw new Error("Result is not Position");
+    
     setTarget(resultJson);
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 
   canvasInit();
