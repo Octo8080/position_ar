@@ -51,9 +51,7 @@ export function setTarget(params: {
   longitude: number;
   altitude: number;
 }) {
-  target.latitude = params.latitude;
-  target.longitude = params.longitude;
-  target.altitude = params.altitude;
+  target = params
 }
 
 function getDistanceAndDirection(params: {
