@@ -1,6 +1,6 @@
 //export async function initialTargetFetch(): Promise<Position> {
 //  const result = await fetch("/api/position");
-//  const resultJson = result.json();
+//  const resultJson = await result.json();
 //  if (!isPosition(resultJson)) throw new Error("Result is not Position");
 //  return resultJson;
 //}

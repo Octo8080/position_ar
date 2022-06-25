@@ -60,6 +60,7 @@ function getDistanceAndDirection(params: {
   longitude: number;
   altitude: number;
 }): DistanceTo {
+  console.log(target)
   const selfPosition = new LatLon(params.latitude, params.longitude);
   const targetPosition = new LatLon(target.latitude, target.longitude);
 
