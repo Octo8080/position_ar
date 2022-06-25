@@ -37,6 +37,7 @@ function onError(error: GeolocationPositionError) {
 //};
 
 function initialTarget() {
+    console.log()
   return {
     latitude: 35.60662567706206,
     longitude: 139.70469609770905,
