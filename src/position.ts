@@ -52,7 +52,6 @@ function getDistanceAndDirection(params: {
   longitude: number;
   altitude: number;
 }): DistanceTo {
-  console.log(lawTargetPosition);
   const q = lawTargetPosition;
   const selfPosition = new LatLon(params.latitude, params.longitude);
   const targetPosition = new LatLon(q.latitude, q.longitude);

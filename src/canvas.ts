@@ -9,7 +9,6 @@ let effectOffscreenCanvas: HTMLCanvasElement | null = null;
 let effectOffscreenCanvasContext: CanvasRenderingContext2D | null = null;
 let viewCanvasContext: CanvasRenderingContext2D | null = null;
 export function canvasInit() {
-  console.log("canvasInit");
   videoSource = document.createElement("video");
 
   offscreenCanvas = document.createElement("canvas") as HTMLCanvasElement;
