@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "lib": ["esnext", "dom", "dom.iterable", "dom.asynciterable"]
+    "target": "es6",
+    "lib": [ "dom", "es2022", "deno.ns" ]
   }
 }

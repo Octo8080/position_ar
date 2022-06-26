@@ -6,18 +6,16 @@ import { getDistanceTo } from "./position.ts";
 let videoSource: HTMLVideoElement | null = null;
 let offscreenCanvas: HTMLCanvasElement | null = null;
 let effectOffscreenCanvas: HTMLCanvasElement | null = null;
-let effectOffscreenCanvasContext: RenderingContext | null = null;
-let viewCanvasContext: RenderingContext | null = null;
+let effectOffscreenCanvasContext: CanvasRenderingContext2D | null = null;
+let viewCanvasContext: CanvasRenderingContext2D | null = null;
 export function canvasInit() {
   console.log("canvasInit");
   videoSource = document.createElement("video");
 
-  offscreenCanvas = <HTMLCanvasElement> document.createElement("canvas");
-  effectOffscreenCanvas = <HTMLCanvasElement> document.createElement("canvas");
+  offscreenCanvas = document.createElement("canvas") as HTMLCanvasElement;
+  effectOffscreenCanvas = document.createElement("canvas") as HTMLCanvasElement;
 
-  const viewCanvas: HTMLCanvasElement = <HTMLCanvasElement> (
-    document.querySelector("#result")
-  );
+  const viewCanvas = document.querySelector("#result") as HTMLCanvasElement;
   viewCanvas.height = document.documentElement.clientHeight;
   viewCanvas.width = document.documentElement.clientWidth;
 
@@ -86,7 +84,7 @@ export function threeJsInit() {
 
   renderer.setClearColor(new THREE.Color("black"), 0);
 
-  renderer.setAnimationLoop((time) => {
+  renderer.setAnimationLoop((time:number) => {
     mesh.rotation.x = time / 2000;
     mesh.rotation.y = time / 1000;
 
