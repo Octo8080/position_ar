@@ -63,7 +63,7 @@ export function threeJsInit() {
   camera.lookAt(new THREE.Vector3(0, 0, -1));
 
   const scene = new THREE.Scene();
-  const geometry = new THREE.BoxGeometry(3, 3, 3);
+  const geometry = new THREE.BoxGeometry(2, 2, 2);
   const material = new THREE.MeshNormalMaterial();
   const mesh = new THREE.Mesh(geometry, material);
 
